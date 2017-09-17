@@ -1,0 +1,102 @@
+// These are the styles to make some of the templates look extra nice.
+// Feel free to remove these styles for production!
+
+// Body Styles 
+body,
+html, 
+.body {
+  background: #f3f3f3 !important;
+}
+
+.container.header {
+  background: #f3f3f3;
+}
+
+.body-drip {
+  border-top: 8px solid #663399;
+}
+
+// Full Width Headers
+.header {
+  background: #8a8a8a;
+}
+
+.header .columns {
+  padding-bottom: 0;
+}
+
+.header p {
+  color: #fff;
+  padding-top: 15px;
+}
+
+.header .wrapper-inner {
+  padding: 20px;
+}
+
+.header .container {
+  background: transparent;
+}
+
+// Social Media
+table.button.facebook table td {
+  background: #3B5998 !important;
+  border-color: #3B5998;
+}
+
+table.button.twitter table td {
+  background: #1daced !important;
+  background: #1daced !important;
+  border-color: #1daced;
+}
+
+table.button.google table td {
+  background: #DB4A39 !important;
+  border-color: #DB4A39;
+}
+
+.wrapper.secondary {
+  background: #f3f3f3;
+}
+
+
+// CUSTOM CLASSES
+
+.banner {
+  background-color: $secondary-color;
+  padding: 16px;
+  position: relative;
+}
+.banner-image {
+  color: #FFF;
+  margin: 0px auto;
+  padding: 16px 0;
+  height: 80px;
+}
+
+.indented-section {
+  background-color: $background-color-light;
+  border-radius: 2px;
+  margin: 8px;
+  padding: 8px 16px;
+}
+
+.text-align-right {
+  text-align: right; 
+}
+
+.error {
+  color: $alert-color;
+}
+.error a {
+  color: $alert-color;
+  text-decoration: underline;
+}
+
+.table-header th {
+  padding: 8px 0;
+}
+
+.table-footer td {
+  padding: 24px 0 8px 0;
+}
