@@ -22,3 +22,8 @@ are inside the archive folder.
 To copy an email over to Distru, go into the `./dist` folder after running `npm run build` and find the properly compiled version of the email
 you want to use.  The email will be minified, so visit [freeformatter](https://www.freeformatter.com/html-formatter.html) in order to properly format
 the HTML prior to pasting into Distru.
+
+## Testing Emails
+
+Use [inboxinspector](http://www.inboxinspector.com/) to test how your HTML email looks on archaic windows clients
+
