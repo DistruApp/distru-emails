@@ -79,6 +79,7 @@ table.button.google table td {
   border-radius: 2px;
   margin: 8px;
   padding: 8px 16px;
+  position: relative;
 }
 
 .text-align-right {
@@ -103,4 +104,12 @@ table.button.google table td {
 
 .text-light {
   color: $text-color-light !important;
+}
+
+.pre {
+  font-family: $body-font-family;
+  white-space: pre-wrap !important;
+  margin: 0 !important;
+  word-wrap: normal;
+  background-color: transparent;
 }
