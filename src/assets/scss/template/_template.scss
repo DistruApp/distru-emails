@@ -74,6 +74,10 @@ table.button.google table td {
   height: 80px;
 }
 
+.no-margin-top {
+  margin-top: 0 !important;
+}
+
 .indented-section {
   background-color: $background-color-light;
   border-radius: 2px;

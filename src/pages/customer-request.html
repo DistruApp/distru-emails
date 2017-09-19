@@ -23,27 +23,15 @@
 
       <spacer size="16"></spacer>
 
-      <p>THC Distribution Inc. sent you the packing slip for <strong>Shipment SHP-0000008</strong> belonging to <strong>Order SO-0000009</strong>. Check out the packing slip breakdown and download the full packing slip below!</p>
+      <p>Your request has been successfully submitted to <strong>THC Distribution Inc.</strong>! You can review your request below:</p>
 
       <spacer size="16"></spacer>
 
-      <row>
-        <columns>
-          <center>
-            <button href="<%= @download_url %>" target='_blank'>Download Packing Slip</button>
-          </center>
-        </columns>
-      </row>
+      <center>
+        <img class='customer-request-image' src='https://s3-us-west-1.amazonaws.com/distru-prod/email/excited.jpg'>
+      </center>
 
-      <div class='indented-section'>
-        <div><b>From:</b> THC Distribution Inc.</div>
-        <br />
-        <div><b>Contact:</b> Tony</div>
-        <div><b>Email:</b> hello@distru.com</div>
-        <div><b>Phone:</b> 604-771-5528</div>
-      </div>
-
-      <div class='indented-section'>
+      <div class='indented-section no-margin-top'>
         <table>
           <tr class='table-header'><th><b>Line Item</b></th><th class='text-align-right'><b>Qty</b></th><th class='text-align-right'><b>Price</b></th></tr>
           <tr><td>Ship's Cannon</td><td class='text-align-right'>2</td><td class='text-align-right'>$100</td></tr>
@@ -56,7 +44,7 @@
 
       <div class='indented-section'>
         <spacer size="8"></spacer>
-        <p><b>Message from THC Distribution Inc.:</b></p>
+        <p><b>Notes:</b></p>
         <br />
         <pre class='pre'>
           Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
@@ -66,14 +54,6 @@
       </div>
 
       <br />
-
-      <row>
-        <columns>
-          <center>
-            <button href="<%= @download_url %>" target='_blank'>Download Packing Slip</button>
-          </center>
-        </columns>
-      </row>
 
       <p class='error'>This email contains sensitive information. If you received this by mistake, please contact <a href='mailto:hello@distru.com?subject=I%20Received%20This%20Email%20By%20Accident'>hello@distru.com</a> immediately and delete this email and all it's associated contents.</p>
     </columns>
