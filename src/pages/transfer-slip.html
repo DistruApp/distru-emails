@@ -1,0 +1,82 @@
+<style type="text/css">
+  body,
+  html, 
+  .body {
+    background: #f3f3f3 !important;
+  }
+</style>
+
+<container>
+  <row class='banner'>
+    <columns>
+      <center>
+        <img class='banner-image' src='https://s3-us-west-1.amazonaws.com/distru-prod/defaults/distru_logo_white_with_text.png' alt='The Distru Logo'>
+      </center>
+    </columns>
+  </row>
+
+  <spacer size="16"></spacer>
+
+  <row>
+    <columns>
+      <p>Hi Greg,</p>
+
+      <spacer size="16"></spacer>
+
+      <p>THC Distribution Inc. sent you the transfer slip for <strong>Transfer TF-0000008</strong>. Check out the transfer slip breakdown and download the full slip below!</p>
+
+      <spacer size="16"></spacer>
+
+      <row>
+        <columns>
+          <center>
+            <button href="<%= @download_url %>" target='_blank'>Download Transfer Slip</button>
+          </center>
+        </columns>
+      </row>
+
+      <div class='indented-section'>
+        <table>
+          <tr class='table-header'><th><b>Line Item</b></th><th><b>Vendor</b></th><th class='text-align-right'><b>Qty</b></th></tr>
+          <tr><td>B1 - Ship's Cannon</td><td>Blue Belly Farms</td><td class='text-align-right'>100 Grams</td></tr>
+        </table>
+      </div>
+
+      <div class='indented-section'>
+        <spacer size="8"></spacer>
+        <p><b>Notes:</b></p>
+        <br />
+        <pre class='pre'>
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+          
+          Ut enim ad minim veniam, \n quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        </pre>
+      </div>
+
+      <br />
+
+      <row>
+        <columns>
+          <center>
+            <button href="<%= @download_url %>" target='_blank'>Download Transfer Slip</button>
+          </center>
+        </columns>
+      </row>
+
+      <p class='error'>This email contains sensitive information. If you received this by mistake, please contact <a href='mailto:hello@distru.com?subject=I%20Received%20This%20Email%20By%20Accident'>hello@distru.com</a> immediately and delete this email and all it's associated contents.</p>
+    </columns>
+  </row>
+
+  <br />
+
+  <row class="footer text-center">
+    <columns>
+      <small>
+        Need <b>Cannabis Distribution Software</b> and more?<br />
+        Let's chat and see if we can help! Drop us a line:<br /><br />
+        Phone: 603.630.0282<br />
+        Email: <a href='mailto:hello@distru.com?subject=Distru%20Software%20Inquiry'>hello@distru.com</a>
+      </small>
+    </columns>
+  </row>
+</container>
