@@ -1,19 +1,19 @@
-import gulp     from 'gulp';
-import plugins  from 'gulp-load-plugins';
-import browser  from 'browser-sync';
-import rimraf   from 'rimraf';
-import panini   from 'panini';
-import yargs    from 'yargs';
-import lazypipe from 'lazypipe';
-import inky     from 'inky';
-import fs       from 'fs';
-import siphon   from 'siphon-media-query';
-import path     from 'path';
-import merge    from 'merge-stream';
-import beep     from 'beepbeep';
-import colors   from 'colors';
+import gulp         from 'gulp';
+import loadPlugins  from 'gulp-load-plugins';
+import browser      from 'browser-sync';
+import rimraf       from 'rimraf';
+import panini       from 'panini';
+import yargs        from 'yargs';
+import lazypipe     from 'lazypipe';
+import inky         from 'inky';
+import fs           from 'fs';
+import siphon       from 'siphon-media-query';
+import path         from 'path';
+import merge        from 'merge-stream';
+import chalk        from 'chalk';
+import uncss        from 'postcss-uncss';
 
-const $ = plugins();
+const $ = loadPlugins();
 
 // Look for the --production flag
 const PRODUCTION = !!(yargs.argv.production);
@@ -70,15 +70,17 @@ function resetPages(done) {
 
 // Compile Sass into CSS
 function sass() {
+  let plugins = [
+      uncss({
+          html: ['dist/**/*.html']
+      })
+  ];
   return gulp.src('src/assets/scss/app.scss')
     .pipe($.if(!PRODUCTION, $.sourcemaps.init()))
     .pipe($.sass({
       includePaths: ['node_modules/foundation-emails/scss']
     }).on('error', $.sass.logError))
-    .pipe($.if(PRODUCTION, $.uncss(
-      {
-        html: ['dist/**/*.html']
-      })))
+    .pipe($.if(PRODUCTION, $.postcss(plugins)))
     .pipe($.if(!PRODUCTION, $.sourcemaps.write()))
     .pipe(gulp.dest('dist/css'));
 }
@@ -140,8 +142,7 @@ function creds(done) {
   var configPath = './config.json';
   try { CONFIG = JSON.parse(fs.readFileSync(configPath)); }
   catch(e) {
-    beep();
-    console.log('[AWS]'.bold.red + ' Sorry, there was an issue locating your config.json. Please see README.md');
+    console.log(chalk.red.bold('[AWS]') + ' Sorry, there was an issue locating your config.json. Please see README.md');
     process.exit();
   }
   done();
