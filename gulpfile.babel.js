@@ -60,7 +60,7 @@ function pages() {
     }))
     .pipe(inky({
         cheerio: {
-            normalizeWhitespace: true,
+            normalizeWhitespace: false,
         }
     }))
     .pipe(gulp.dest('dist'));
@@ -140,8 +140,12 @@ function inliner(css) {
       preserveMediaQueries: true,
       removeLinkTags: false,
       codeBlocks: {
-          eex: {
+          eex_assign: {
               start: '<%=',
+              end: '%>',
+          },
+          eex: {
+              start: '<%',
               end: '%>',
           }
       },
