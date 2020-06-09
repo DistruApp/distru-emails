@@ -31,7 +31,7 @@
 
       <spacer size="16"></spacer>
 
-      <p><raw><%= @invoice.company.name %></raw> sent you <strong>Invoice <raw><%= @invoice.invoice_number %></raw></strong> belonging to <strong>Order <raw><%= @invoice.order.order_number %></raw></strong>. Check out the invoice breakdown and download the full invoice below!</p>
+      <p><raw><%= @invoice.company.name %></raw> sent you <strong>Invoice <raw><%= @invoice.invoice_number %></raw></strong> belonging to <strong>Order <raw><%= @invoice.order.order_number %></raw></strong>. Check out the invoice breakdown below!</p>
 
       <spacer size="16"></spacer>
 
@@ -78,13 +78,13 @@
               </td>
           </tr>
           <raw><% end %></raw>
-          <tr>
+          <tr class='table-footer'>
             <td colspan="2"><b>Paid:</b></td>
             <td class='text-align-right'>
                 <b><raw><%= Number.Currency.number_to_currency(@invoice.paid || 0.0) %></raw></b>
             </td>
           </tr>
-          <tr class='table-footer'>
+          <tr>
             <td colspan="2"><b>Total:</b></td>
             <td class='text-align-right'>
                 <b><raw><%= Number.Currency.number_to_currency(@invoice.total || 0.0) %></raw></b>
@@ -134,7 +134,6 @@
       <small>
         Need <b>Cannabis Distribution Software</b> and more?<br />
         Let's chat and see if we can help! Drop us a line:<br /><br />
-        Phone: 603.630.0282<br />
         Email: <a href='mailto:hello@distru.com?subject=Distru%20Software%20Inquiry'>hello@distru.com</a>
       </small>
     </columns>
