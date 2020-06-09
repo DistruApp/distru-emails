@@ -4,6 +4,12 @@
   .body {
     background: #f3f3f3 !important;
   }
+  small.dark {
+    color: #aaa !important;
+  }
+  sup.small {
+    font-size: 65% !important;
+  }
 </style>
 
 <container>
@@ -19,73 +25,104 @@
 
   <row>
     <columns>
-      <p>Hi Greg,</p>
+      <p class="top-box">Please <b>do not reply</b> to this email, as this inbox is not monitored.</p>
+
+      <p>Hi <raw><%= @invoice.company_relationship.related_company.name %></raw>,</p>
 
       <spacer size="16"></spacer>
 
-      <p>THC Distribution Inc. sent you <strong>Invoice #INV-0000007</strong> belonging to <strong>Order #SO-0000007</strong>. Check out the invoice breakdown and download the full invoice below!</p>
+      <p><raw><%= @invoice.company.name %></raw> sent you <strong>Invoice <raw><%= @invoice.invoice_number %></raw></strong> belonging to <strong>Order <raw><%= @invoice.order.order_number %></raw></strong>. Check out the invoice breakdown and download the full invoice below!</p>
 
       <spacer size="16"></spacer>
 
       <row>
         <columns>
           <center>
-            <button href='#' target='_blank'>Download Full Invoice</button>
+              <button href='<%= @download_url %>' target='_blank'>Download Full Invoice<sup class="small">1</sup></button>
           </center>
         </columns>
       </row>
 
       <div class='indented-section'>
-        <div><b>From:</b> THC Distribution Inc.</div>
+          <div><b>From:</b> <raw><%= @invoice.company.name %></raw></div>
         <br />
-        <div><b>Contact:</b> Tony</div>
-        <div><b>Email:</b> hello@hello.com</div>
-        <div><b>Phone:</b> hello@hello.com</div>
+        <div><b>Contact:</b> <raw><%= if(@invoice.owner, do: @invoice.owner.profile.full_name, else: "--") %></raw></div>
+        <div><b>Email:</b> <raw><%= if(@invoice.owner, do: (@invoice.owner.email || @invoice.company.email || "--"), else: (@invoice.company.email || "--")) %></raw></div>
+        <div><b>Phone:</b> <raw><%= if(@invoice.owner, do: (@invoice.owner.profile.work_phone || @invoice.owner.profile.phone || @invoice.company.phone || "--"), else: (@invoice.company.phone || "--")) %></raw></div>
       </div>
 
       <div class='indented-section'>
         <table>
           <tr class='table-header'><th><b>Line Item</b></th><th class='text-align-right'><b>Qty</b></th><th class='text-align-right'><b>Price</b></th></tr>
-          <tr><td>Ship's Cannon</td><td class='text-align-right'>2</td><td class='text-align-right'>$100</td></tr>
-          <tr><td>Ship's Cannon</td><td class='text-align-right'>2</td><td class='text-align-right'>$100</td></tr>
-          <tr><td>Ship's Cannon</td><td class='text-align-right'>2</td><td class='text-align-right'>$100</td></tr>
-          <tr class='table-footer'>
-            <td colspan="2"><b>Total:</b></td>
-            <td class='text-align-right'><b>$600</b></td>
+          <raw><%= for item <- @invoice.invoice_items do %></raw>
+          <tr>
+              <td><raw><%= item.order_item.product.name %></raw></td>
+              <td class='text-align-right'>
+                  <raw><%= if Distru.Services.Product.package_tracked?(item.order_item.product) && item.order_item.package_id do %></raw>
+                  <raw><%= Distru.Helpers.UnitOfMeasure.pluralize(item.order_item.package.unit_type.name, item.quantity, true) %></raw>
+                  <raw><% else %></raw>
+                  <raw><%= Distru.Helpers.UnitOfMeasure.pluralize(item.order_item.product.unit_type.name, item.quantity, true) %></raw>
+                  <raw><% end %></raw>
+              </td>
+              <td class='text-align-right'>
+                  <raw><%= Number.Currency.number_to_currency(item.order_item.price) %></raw>
+              </td>
+          </tr>
+          <raw><% end %></raw>
+          <raw><%= for charge <- @invoice.invoice_charges do %></raw>
+          <tr>
+              <td><raw><%= charge.name %></raw></td>
+              <td class='text-align-right'>1 <raw><%= charge.type %></raw></td>
+              <td class='text-align-right'>
+                  <raw><%= Number.Currency.number_to_currency(charge.price) %></raw>
+              </td>
           </tr>
           <tr>
             <td colspan="2"><b>Paid:</b></td>
-            <td class='text-align-right'><b>$600</b></td>
+            <td class='text-align-right'>
+                <b><raw><%= Number.Currency.number_to_currency(@invoice.paid || 0.0) %></raw></b>
+            </td>
+          </tr>
+          <tr class='table-footer'>
+            <td colspan="2"><b>Total:</b></td>
+            <td class='text-align-right'>
+                <b><raw><%= Number.Currency.number_to_currency(@invoice.total || 0.0) %></raw></b>
+            </td>
           </tr>
           <tr class='table-footer'>
             <td colspan="2"><b>Balance Due:</b></td>
-            <td class='text-align-right'><b>$600</b></td>
+            <td class='text-align-right'>
+                <b><raw><%= Number.Currency.number_to_currency(Decimal.sub(@invoice.total, @invoice.paid)) %></raw></b>
+            </td>
           </tr>
         </table>
       </div>
 
+      <raw><%= if @invoice.external_notes do %></raw>
       <div class='indented-section'>
         <spacer size="8"></spacer>
-        <p><b>Message from THC Distribution Inc.:</b></p>
+        <p><b>Message from <raw><%= @invoice.company.name %></raw>:</b></p>
         <br />
         <pre class='pre'>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-          
-          Ut enim ad minim veniam, \n quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+          <raw><%= String.replace(@invoice.external_notes || "", "↵", "\n") || "--" %></raw>
         </pre>
       </div>
+      <raw><% end %></raw>
 
       <br />
 
       <row>
         <columns>
           <center>
-            <button href='#' target='_blank'>Download Full Invoice</button>
+              <button href='<%= @download_url %>' target='_blank'>Download Full Invoice<sup class="small">1</sup></button>
           </center>
         </columns>
       </row>
 
       <p class='error'>This email contains sensitive information. If you received this by mistake, please contact <a href='mailto:hello@distru.com?subject=I%20Received%20This%20Email%20By%20Accident'>hello@distru.com</a> immediately and delete this email and all it's associated contents.</p>
+
+      <br />
+      <small class="dark"><b><sup>1</sup> This download link will expire in 7 days<b></small>
     </columns>
   </row>
 

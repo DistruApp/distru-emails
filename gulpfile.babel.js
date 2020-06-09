@@ -24,7 +24,7 @@ var CONFIG;
 
 // Build the "dist" folder by running all of the below tasks
 gulp.task('build',
-  gulp.series(clean, pages, sass, images, inline));
+  gulp.series(clean, pages, sass, images, inline, beautify));
 
 // Build emails, run the server, and watch for file changes
 gulp.task('default',
@@ -58,7 +58,11 @@ function pages() {
       partials: 'src/partials',
       helpers: 'src/helpers'
     }))
-    .pipe(inky())
+    .pipe(inky({
+        cheerio: {
+            normalizeWhitespace: true,
+        }
+    }))
     .pipe(gulp.dest('dist'));
 }
 
@@ -99,6 +103,15 @@ function inline() {
     .pipe(gulp.dest('dist'));
 }
 
+// Format the output HTML
+function beautify() {
+  return gulp.src('dist/**/*.html')
+    .pipe($.jsbeautifier({
+        wrap_attributes: "force-aligned",
+    }))
+    .pipe(gulp.dest('dist'));
+}
+
 // Start a server with LiveReload to preview the site in
 function server(done) {
   browser.init({
@@ -125,16 +138,18 @@ function inliner(css) {
       applyStyleTags: false,
       removeStyleTags: true,
       preserveMediaQueries: true,
-      removeLinkTags: false
+      removeLinkTags: false,
+      codeBlocks: {
+          eex: {
+              start: '<%=',
+              end: '%>',
+          }
+      },
     })
     .pipe($.replace, '<!-- <style> -->', `<style>${mqCss}</style>`)
-    .pipe($.replace, '<link rel="stylesheet" type="text/css" href="css/app.css">', '')
-    .pipe($.htmlmin, {
-      collapseWhitespace: true,
-      minifyCSS: true
-    });
+    .pipe($.replace, '<link rel="stylesheet" type="text/css" href="css/app.css">', '');
 
-  return pipe();
+    return pipe();
 }
 
 // Ensure creds for Litmus are at least there.
